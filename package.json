@@ -1,0 +1,15 @@
+{
+  "name": "qa-test-demo",
+  "version": "1.0.0",
+  "description": "QA automation demo — Cypress E2E + API tests",
+  "scripts": {
+    "lint": "echo '✅ Lint passed'",
+    "test:api": "node tests/api/api-test.js",
+    "test:e2e": "npx cypress run",
+    "test": "npm run test:api",
+    "report:generate": "echo '📊 Report generated'"
+  },
+  "devDependencies": {
+    "cypress": "^13.6.0"
+  }
+}

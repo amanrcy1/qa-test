@@ -1,0 +1,12 @@
+{
+  "validCheckout": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "postalCode": "12345"
+  },
+  "missingFirstName": {
+    "firstName": "",
+    "lastName": "Doe",
+    "postalCode": "12345"
+  }
+}
