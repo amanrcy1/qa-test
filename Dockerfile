@@ -30,11 +30,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
-# Chrome browser — Cypress runs E2E tests against this
-RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google.gpg \
-    && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google.gpg] http://dl.google.com/linux/chrome/deb/ stable main" \
-       > /etc/apt/sources.list.d/google-chrome.list \
-    && apt-get update && apt-get install -y google-chrome-stable \
+# Chromium browser — works on both amd64 and arm64 (Apple Silicon)
+RUN apt-get update && apt-get install -y chromium-browser \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
