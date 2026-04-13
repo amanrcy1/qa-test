@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     curl wget git unzip gnupg ca-certificates \
     libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev \
     libnss3 libxss1 libasound2 libxtst6 xauth xvfb \
-    dbus dbus-x11 \
+    dbus dbus-x11 socat \
     && rm -rf /var/lib/apt/lists/*
 
 # Java 17 — needed for TestNG/Maven
