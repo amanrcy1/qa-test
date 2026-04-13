@@ -39,4 +39,7 @@ WORKDIR /app
 # pre-install Cypress binary so pipeline runs are faster
 RUN npm install -g cypress && npx cypress verify
 
+# fix npm cache permissions for Jenkins (runs as uid 1000)
+RUN mkdir -p /.npm && chmod -R 777 /.npm
+
 CMD ["bash"]
