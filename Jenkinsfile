@@ -57,7 +57,7 @@ pipeline {
             steps {
                 sh """
                     npx cypress run \
-                        --browser ${params.BROWSER} \
+                        --browser chromium \
                         --config baseUrl=${BASE_URL}
                 """
             }

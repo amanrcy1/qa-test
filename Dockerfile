@@ -31,7 +31,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && rm -rf /var/lib/apt/lists/*
 
 # Chromium browser — works on both amd64 and arm64 (Apple Silicon)
-RUN apt-get update && apt-get install -y chromium-browser \
+RUN apt-get update && apt-get install -y chromium-browser dbus dbus-x11 \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
