@@ -21,6 +21,7 @@ pipeline {
     environment {
         BASE_URL = 'https://www.saucedemo.com'
         DBUS_SESSION_BUS_ADDRESS = '/dev/null'
+        CYPRESS_VERIFY_TIMEOUT = '120000'
     }
 
     options {
@@ -57,10 +58,6 @@ pipeline {
         stage('E2E Tests - Cypress') {
             steps {
                 sh """
-                    dbus-uuidgen > /var/lib/dbus/machine-id 2>/dev/null || true
-                    mkdir -p /run/dbus
-                    dbus-daemon --system --fork 2>/dev/null || true
-                    export DBUS_SESSION_BUS_ADDRESS=/dev/null
                     npx cypress run \
                         --browser chromium \
                         --config baseUrl=${BASE_URL}
