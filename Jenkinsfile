@@ -24,7 +24,6 @@ pipeline {
 
     options {
         timeout(time: 30, unit: 'MINUTES')  // kill build if stuck
-        timestamps()                         // show time in logs
         buildDiscarder(logRotator(numToKeepStr: '10')) // keep last 10 builds
     }
 
