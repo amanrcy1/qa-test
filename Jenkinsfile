@@ -57,10 +57,12 @@ pipeline {
 
         stage('E2E Tests - Cypress') {
             steps {
-                sh 'npx cypress verify'
                 sh """
-                    xvfb-run --auto-servernum \
-                    npx cypress run \
+                    export CYPRESS_CACHE_FOLDER=/opt/cypress_cache
+                    export DBUS_SESSION_BUS_ADDRESS=/dev/null
+                    export ELECTRON_EXTRA_LAUNCH_ARGS='--no-sandbox --disable-gpu --disable-dev-shm-usage'
+                    xvfb-run --auto-servernum --server-args='-screen 0 1280x720x24' \
+                    node_modules/.bin/cypress run \
                         --config baseUrl=${BASE_URL}
                 """
             }
