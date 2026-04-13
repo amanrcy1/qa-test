@@ -78,7 +78,7 @@ pipeline {
             echo '❌ Some tests failed. Check the reports.'
         }
         always {
-            cleanWs() // remove workspace files after build
+            deleteDir() // remove workspace files after build
         }
     }
 }
