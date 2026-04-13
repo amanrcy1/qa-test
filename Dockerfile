@@ -42,7 +42,7 @@ ENV CYPRESS_CACHE_FOLDER=/opt/cypress_cache
 RUN mkdir -p /opt/cypress_cache
 
 # Pre-install Cypress binary with dbus suppressed
-RUN DBUS_SESSION_BUS_ADDRESS=/dev/null npm install -g cypress \
+RUN DBUS_SESSION_BUS_ADDRESS=/dev/null npm install -g cypress@13 \
     && DBUS_SESSION_BUS_ADDRESS=/dev/null npx cypress verify || true
 
 # Fix all permissions for Jenkins (runs as uid 1000)

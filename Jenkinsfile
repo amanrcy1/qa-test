@@ -39,7 +39,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'CYPRESS_INSTALL_BINARY=0 npm ci'
+                sh 'npm ci'
             }
         }
 
