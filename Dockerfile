@@ -40,6 +40,8 @@ WORKDIR /app
 RUN npm install -g cypress && npx cypress verify
 
 # fix npm/cypress cache and dbus permissions for Jenkins (runs as uid 1000)
-RUN mkdir -p /.npm /.cache /run/dbus && chmod -R 777 /.npm /.cache /run/dbus
+RUN mkdir -p /.npm /.cache /run/dbus /var/lib/dbus \
+    && dbus-uuidgen > /var/lib/dbus/machine-id \
+    && chmod -R 777 /.npm /.cache /run/dbus /var/lib/dbus
 
 CMD ["bash"]

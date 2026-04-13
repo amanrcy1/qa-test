@@ -58,8 +58,9 @@ pipeline {
         stage('E2E Tests - Cypress') {
             steps {
                 sh """
+                    CYPRESS_VERIFY_TIMEOUT=120000 \
+                    ELECTRON_EXTRA_LAUNCH_ARGS='--no-sandbox --disable-gpu' \
                     npx cypress run \
-                        --browser chromium \
                         --config baseUrl=${BASE_URL}
                 """
             }
