@@ -14,12 +14,14 @@ describe('Shopping Cart', () => {
 
   // login before each test so we start on inventory page
   beforeEach(() => {
-    // Set auth cookie directly to skip slow UI login
-    cy.setCookie('session-username', users.validUser.username);
-    cy.visit('/inventory.html', {
+    cy.visit('/', {
       retryOnStatusCodeFailure: true,
       retryOnNetworkFailure: true,
     });
+    cy.get('[data-test="login-button"]', { timeout: 30000 }).should('be.visible');
+    cy.get('[data-test="username"]').clear().type(users.validUser.username);
+    cy.get('[data-test="password"]').clear().type(users.validUser.password);
+    cy.get('[data-test="login-button"]').click();
     InventoryPage.verifyOnInventoryPage();
   });
 
