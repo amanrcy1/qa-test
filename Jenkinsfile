@@ -1,5 +1,4 @@
 pipeline {
-    // run all stages inside our custom Docker image
     agent {
         docker {
             image 'qa-test-runner:latest'
@@ -7,21 +6,16 @@ pipeline {
         }
     }
 
-    // auto-trigger on GitHub push
     triggers {
         githubPush()
     }
 
-    // user picks environment and browser when triggering build manually
     parameters {
         choice(name: 'ENVIRONMENT', choices: ['staging', 'production'], description: 'Target environment')
     }
 
     environment {
-        BASE_URL                 = 'https://www.saucedemo.com'
-        DBUS_SESSION_BUS_ADDRESS = '/dev/null'
-        CYPRESS_CACHE_FOLDER     = '/opt/cypress_cache'
-        CYPRESS_VERIFY_TIMEOUT   = '120000'
+        BASE_URL = 'https://www.saucedemo.com'
     }
 
     options {
@@ -58,18 +52,11 @@ pipeline {
         stage('E2E Tests - Cypress') {
             steps {
                 sh """
-                    export CYPRESS_CACHE_FOLDER=/opt/cypress_cache
-                    export CYPRESS_VERIFY_TIMEOUT=120000
-                    
-                    # Create a fake dbus socket so Electron doesn't hang
-                    socat UNIX-LISTEN:/run/dbus/system_bus_socket,fork /dev/null &
-                    sleep 1
-                    
-                    ELECTRON_EXTRA_LAUNCH_ARGS='--no-sandbox --disable-gpu --disable-dev-shm-usage' \
                     xvfb-run --auto-servernum --server-args='-screen 0 1280x720x24' \
-                    node_modules/.bin/cypress run \
-                        --browser electron \
-                        --config baseUrl=${BASE_URL}
+                    npx cypress run \
+                        --browser /usr/bin/chromium-browser \
+                        --config baseUrl=${BASE_URL} \
+                        --headless
                 """
             }
             post {
