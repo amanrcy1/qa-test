@@ -33,7 +33,7 @@ E-commerce test automation project using Cypress (E2E) and Node.js (API tests), 
 | API | 19 | GET, POST, PUT, DELETE, filtering, 404 handling |
 | E2E - Login | 5 | Valid login, invalid, locked user, empty fields |
 | E2E - Cart | 2 | Add/remove items, verify cart, full checkout flow |
-| **Total** | **26** | |
+| **Total** | **26** | **All passing in Jenkins CI/CD** |
 
 ---
 
