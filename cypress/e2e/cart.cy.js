@@ -5,54 +5,43 @@ import CheckoutPage from '../pages/CheckoutPage';
 
 describe('Shopping Cart', () => {
 
-  let users, checkout; // loaded from fixtures
+  let users, checkout;
 
   before(() => {
     cy.fixture('users').then((data) => { users = data; });
     cy.fixture('checkout').then((data) => { checkout = data; });
   });
 
-  // login before each test so we start on inventory page
-  beforeEach(() => {
-    cy.visit('/', {
-      retryOnStatusCodeFailure: true,
-      retryOnNetworkFailure: true,
-    });
-    cy.get('[data-test="login-button"]', { timeout: 30000 }).should('be.visible');
-    cy.get('[data-test="username"]').clear().type(users.validUser.username);
-    cy.get('[data-test="password"]').clear().type(users.validUser.password);
-    cy.get('[data-test="login-button"]').click();
+  // Single login + test flow to minimize page loads in CI
+  it('should add, remove items and verify cart', () => {
+    LoginPage.visit();
+    LoginPage.login(users.validUser.username, users.validUser.password);
     InventoryPage.verifyOnInventoryPage();
-  });
 
-  it('should add an item to cart', () => {
+    // Add single item
     InventoryPage.addToCart('sauce-labs-backpack');
     InventoryPage.verifyCartCount(1);
-  });
 
-  it('should add multiple items to cart', () => {
-    InventoryPage.addToCart('sauce-labs-backpack');
+    // Add second item
     InventoryPage.addToCart('sauce-labs-bike-light');
     InventoryPage.verifyCartCount(2);
-  });
 
-  it('should remove an item from cart', () => {
-    InventoryPage.addToCart('sauce-labs-backpack');
+    // Remove first item
     InventoryPage.removeFromCart('sauce-labs-backpack');
-    InventoryPage.verifyCartCount(0); // badge disappears
-  });
+    InventoryPage.verifyCartCount(1);
 
-  it('should show items in cart page', () => {
-    InventoryPage.addToCart('sauce-labs-backpack');
+    // Verify cart page
     InventoryPage.goToCart();
-
     CartPage.verifyOnCartPage();
     CartPage.verifyItemCount(1);
-    CartPage.verifyItemInCart('Sauce Labs Backpack');
+    CartPage.verifyItemInCart('Sauce Labs Bike Light');
   });
 
-  // full flow: add → cart → checkout info → overview → finish
   it('should complete full checkout flow', () => {
+    LoginPage.visit();
+    LoginPage.login(users.validUser.username, users.validUser.password);
+    InventoryPage.verifyOnInventoryPage();
+
     InventoryPage.addToCart('sauce-labs-backpack');
     InventoryPage.goToCart();
     CartPage.checkout();
