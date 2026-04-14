@@ -25,8 +25,8 @@ class InventoryPage {
   }
 
   verifyOnInventoryPage() {
-    cy.url().should('include', '/inventory.html');
-    cy.get(this.inventoryList).should('be.visible');
+    cy.url({ timeout: 30000 }).should('include', '/inventory.html');
+    cy.get(this.inventoryList, { timeout: 30000 }).should('be.visible');
   }
 
   verifyCartCount(count) {

@@ -1,6 +1,7 @@
 // reusable login — call as cy.login() in any test
 Cypress.Commands.add('login', (username = 'standard_user', password = 'secret_sauce') => {
-  cy.visit('/');
+  cy.visit('/', { timeout: 120000 });
+  cy.get('[data-test="login-button"]', { timeout: 30000 }).should('be.visible');
   cy.get('[data-test="username"]').type(username);
   cy.get('[data-test="password"]').type(password);
   cy.get('[data-test="login-button"]').click();

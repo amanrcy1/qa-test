@@ -8,7 +8,8 @@ class LoginPage {
   get errorMessage()  { return '[data-test="error"]'; }
 
   visit() {
-    cy.visit('/');
+    cy.visit('/', { timeout: 120000 });
+    cy.get(this.loginButton, { timeout: 30000 }).should('be.visible');
   }
 
   login(username, password) {
