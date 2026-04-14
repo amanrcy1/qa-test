@@ -14,8 +14,12 @@ describe('Shopping Cart', () => {
 
   // login before each test so we start on inventory page
   beforeEach(() => {
-    LoginPage.visit();
-    LoginPage.login(users.validUser.username, users.validUser.password);
+    cy.session('user-login', () => {
+      LoginPage.visit();
+      LoginPage.login(users.validUser.username, users.validUser.password);
+      InventoryPage.verifyOnInventoryPage();
+    });
+    cy.visit('/inventory.html');
     InventoryPage.verifyOnInventoryPage();
   });
 
