@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'qa-test-runner:latest'
-            args '-v /tmp:/tmp'
+            args '-v /tmp:/tmp --shm-size=512m'
         }
     }
 

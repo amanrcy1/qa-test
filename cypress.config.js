@@ -10,8 +10,19 @@ module.exports = defineConfig({
     defaultCommandTimeout: 10000,
     pageLoadTimeout: 90000,
     retries: {
-      runMode: 2,    // retry failed tests up to 2 times in CI
-      openMode: 0,   // no retries in interactive mode
+      runMode: 2,
+      openMode: 0,
+    },
+    setupNodeEvents(on) {
+      on('before:browser:launch', (browser, launchOptions) => {
+        // Fix shared memory issues in Docker containers
+        if (browser.family === 'chromium' || browser.name === 'electron') {
+          launchOptions.args.push('--disable-dev-shm-usage');
+          launchOptions.args.push('--disable-gpu');
+          launchOptions.args.push('--no-sandbox');
+        }
+        return launchOptions;
+      });
     },
   },
 });
