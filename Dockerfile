@@ -36,11 +36,12 @@ RUN apt-get update && apt-get install -y chromium-browser \
 WORKDIR /app
 
 # Permissions for Jenkins (runs as uid 1000)
-RUN mkdir -p /.npm /.cache /.local /run/dbus /var/lib/dbus \
+# Create jenkins user and messagebus user for dbus
+RUN useradd -u 1000 -m jenkins \
+    && mkdir -p /.npm /.cache /.local /run/dbus /var/lib/dbus \
     && apt-get update && apt-get install -y dbus \
     && rm -rf /var/lib/apt/lists/* \
     && dbus-uuidgen > /var/lib/dbus/machine-id \
-    && chmod -R 777 /.npm /.cache /.local /run/dbus /var/lib/dbus \
-    && chmod 4755 /usr/bin/dbus-daemon
+    && chmod -R 777 /.npm /.cache /.local /run/dbus /var/lib/dbus
 
 CMD ["bash"]
