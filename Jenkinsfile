@@ -52,6 +52,9 @@ pipeline {
         stage('E2E Tests - Cypress') {
             steps {
                 sh """
+                    # Start dbus so Cypress verification doesn't hang
+                    dbus-daemon --system --fork || true
+                    
                     xvfb-run --auto-servernum --server-args='-screen 0 1280x720x24' \
                     npx cypress run \
                         --browser /usr/bin/chromium-browser \
