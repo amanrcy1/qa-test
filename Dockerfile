@@ -29,10 +29,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
-# Chromium — works on amd64 and arm64, no dbus dependency issues
-RUN apt-get update && apt-get install -y chromium-browser \
-    && rm -rf /var/lib/apt/lists/*
-
 WORKDIR /app
 
 # Permissions for Jenkins (runs as uid 1000)
