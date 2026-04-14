@@ -16,6 +16,7 @@ pipeline {
 
     environment {
         BASE_URL = 'https://www.saucedemo.com'
+        ELECTRON_EXTRA_LAUNCH_ARGS = '--disable-dev-shm-usage --disable-gpu --no-sandbox'
     }
 
     options {

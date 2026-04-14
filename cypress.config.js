@@ -13,16 +13,5 @@ module.exports = defineConfig({
       runMode: 2,
       openMode: 0,
     },
-    setupNodeEvents(on) {
-      on('before:browser:launch', (browser, launchOptions) => {
-        // Fix shared memory issues in Docker containers
-        if (browser.family === 'chromium' || browser.name === 'electron') {
-          launchOptions.args.push('--disable-dev-shm-usage');
-          launchOptions.args.push('--disable-gpu');
-          launchOptions.args.push('--no-sandbox');
-        }
-        return launchOptions;
-      });
-    },
   },
 });
