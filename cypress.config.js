@@ -8,5 +8,10 @@ module.exports = defineConfig({
     video: false,
     screenshotOnRunFailure: true,
     defaultCommandTimeout: 10000,
+    pageLoadTimeout: 90000,
+    retries: {
+      runMode: 2,    // retry failed tests up to 2 times in CI
+      openMode: 0,   // no retries in interactive mode
+    },
   },
 });

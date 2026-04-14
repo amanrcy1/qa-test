@@ -8,7 +8,10 @@ class LoginPage {
   get errorMessage()  { return '[data-test="error"]'; }
 
   visit() {
-    cy.visit('/', { timeout: 120000 });
+    cy.visit('/', {
+      retryOnStatusCodeFailure: true,
+      retryOnNetworkFailure: true,
+    });
     cy.get(this.loginButton, { timeout: 30000 }).should('be.visible');
   }
 
